@@ -27,15 +27,25 @@ it("extends", () => {
   expectTypeOf(r3).toEqualTypeOf<1>();
 });
 
-type P<T> = T extends "x" ? 1 : 2;
-var r4: P<"x">;
-var r5: P<"y">;
-var r6: P<"x" | "y">;
+type P1<T> = T extends "x" ? 1 : 2;
+var r4: P1<"x">;
+var r5: P1<"y">;
+var r6: P1<"x" | "y">;
 
 it("extends", () => {
   expectTypeOf(r4).toEqualTypeOf<1>();
   expectTypeOf(r5).toEqualTypeOf<2>();
   expectTypeOf(r6).toEqualTypeOf<1 | 2>();
+});
+
+// 通过数组包裹阻止分解
+type P2<T> = [T] extends ["x"] ? 1 : 2;
+var r15: P2<"x">;
+var r16: P2<"x" | "y">;
+
+it("extends", () => {
+  expectTypeOf(r15).toEqualTypeOf<1>();
+  expectTypeOf(r16).toEqualTypeOf<2>();
 });
 
 interface T4 {
